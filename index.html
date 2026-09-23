@@ -124,12 +124,37 @@
       font-size: 0.85rem;
       color: #888;
     }
+    .icon-svg {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 8px;
+      color: #000;
+    }
+    .icon-svg svg {
+      width: 100%;
+      height: 100%;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.5; /* Líneas más gruesas */
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .transfer-box .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+    }
+    .copy-btn {
+      margin-top: 12px;
+    }
+    .copy-btn.copied {
+      background-color: #6b7a5e;
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <!-- Foto en blanco y negro a ancho completo -->
     <img src="foto.jpeg" alt="Melina y Gabriel" class="hero-photo">
     
     <div class="header-content">
@@ -148,6 +173,15 @@
 
   <!-- Ceremonia Religiosa -->
   <div class="card">
+    <div class="icon-svg">
+      <svg viewBox="0 0 24 24">
+        <path d="m18 10-6-8-6 8"/>
+        <path d="M12 2v6"/>
+        <path d="M10 5h4"/>
+        <path d="M6 10v12h12V10"/>
+        <path d="M12 22v-6a2 2 0 0 0-2-2H10a2 2 0 0 0-2 2v6"/>
+      </svg>
+    </div>
     <h2>Ceremonia Religiosa</h2>
     <p><strong>Parroquia Nuestra Señora de Lourdes</strong></p>
     <p><strong>Hora:</strong> 20:00 hs</p>
@@ -156,6 +190,16 @@
 
   <!-- Civil -->
   <div class="card">
+    <div class="icon-svg">
+      <svg viewBox="0 0 24 24">
+        <line x1="3" y1="22" x2="21" y2="22"/>
+        <line x1="6" y1="18" x2="6" y2="11"/>
+        <line x1="10" y1="18" x2="10" y2="11"/>
+        <line x1="14" y1="18" x2="14" y2="11"/>
+        <line x1="18" y1="18" x2="18" y2="11"/>
+        <polygon points="12 2 20 7 4 7"/>
+      </svg>
+    </div>
     <h2>Civil</h2>
     <p><strong>Salón de Eventos La Legua</strong></p>
     <p><strong>Hora:</strong> 21:30 hs</p>
@@ -173,15 +217,17 @@
   <!-- Tarjetas / Entradas -->
   <div class="card">
     <h2>Tarjetas</h2>
-    <p><strong>Mayores:</strong> $67.000</p>
-    <p><strong>De 3 a 11 años inclusive:</strong> $35.000</p>
+    <p><strong>Mayores:</strong> $68.000</p>
+    <p><strong>De 3 a 11 años inclusive:</strong> $37.000</p>
     <p><strong>Menores de 3 años:</strong> Sin cargo</p>
     <p class="note">Tener en cuenta que el valor se actualiza el 10 de cada mes.</p>
 
-    <div style="margin-top: 20px; text-align: left; background: #f9f9f9; padding: 15px; border-radius: 8px;">
+    <div class="transfer-box" style="margin-top: 20px; text-align: left; background: #f9f9f9; padding: 15px; border-radius: 8px;">
       <p style="text-align: center; margin-bottom: 8px;"><strong>Datos para la transferencia:</strong></p>
-      <p><strong>Alias:</strong> gabrielcampana</p>
-      <p><strong>CBU:</strong> 0000003100103911983913</p>
+      <div class="row"><span>Alias:</span><span>gabrielcampana</span></div>
+      <div class="row"><span>CVU:</span><span>0000003100103911983913</span></div>
+      <div class="row"><span>Nombre:</span><span>Lucas Gabriel Campana</span></div>
+      <button type="button" class="btn copy-btn" id="copyBtn" style="width:100%;" onclick="copiarDatos()">Copiar alias</button>
     </div>
   </div>
 
@@ -190,13 +236,11 @@
     <h2>Confirmación de Asistencia</h2>
     <form id="rsvpForm">
       <input type="text" id="nombre" placeholder="Tu Nombre y Apellido" required>
-      <select id="asistencia" required>
-        <option value="" disabled selected>¿Asistirás?</option>
-        <option value="Sí, asistiré">Sí, asistiré</option>
-        <option value="No podré asistir">No podré asistir</option>
-      </select>
+      <input type="number" id="adultos" min="1" placeholder="Cantidad de adultos (incluyéndote a vos)" required>
+      <input type="number" id="ninos" min="0" placeholder="Cantidad de niños (0 si no asisten)" required>
       <input type="text" id="menu" placeholder="Restricción alimentaria (Celiaco, vegetariano, etc.)">
-      <button type="submit" class="btn">Confirmar por WhatsApp</button>
+      <button type="submit" class="btn">Confirmar asistencia</button>
+      <p class="note" id="rsvpStatus"></p>
     </form>
   </div>
 
@@ -205,7 +249,7 @@
   </footer>
 
   <script>
-    // Fecha de la boda: 2 de Abril de 2027 a las 20:00 hs
+    // Fecha de la boda
     const weddingDate = new Date("April 2, 2027 20:00:00").getTime();
 
     const timer = setInterval(() => {
@@ -222,20 +266,48 @@
       }
     }, 1000);
 
-    // Envío directo de RSVP a WhatsApp
+    function copiarDatos() {
+      const texto = "gabrielcampana";
+      navigator.clipboard.writeText(texto).then(() => {
+        const btn = document.getElementById('copyBtn');
+        const original = btn.textContent;
+        btn.textContent = "¡Copiado!";
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    const GOOGLE_FORM_ACTION_URL = "https://docs.google.com/forms/d/1C1xS3izwvDvtrxPMGZ0TR_a_4SaesObY-BBge_AV5xI/formResponse";
+    const ENTRY_NOMBRE = "entry.768434386";
+    const ENTRY_ADULTOS = "entry.146019545";
+    const ENTRY_NINOS = "entry.1993614961";
+    const ENTRY_MENU = "entry.1111520346";
+
     document.getElementById('rsvpForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const telefono = "5493516212334";
       const nombre = document.getElementById('nombre').value;
-      const asistencia = document.getElementById('asistencia').value;
+      const adultos = document.getElementById('adultos').value;
+      const ninos = document.getElementById('ninos').value;
       const menu = document.getElementById('menu').value;
+      const statusEl = document.getElementById('rsvpStatus');
 
-      let texto = `¡Hola! Confirmo mi asistencia.%0ANombre: ${encodeURIComponent(nombre)}%0AAsistencia: ${encodeURIComponent(asistencia)}`;
-      if (menu) {
-        texto += `%0ARestricción alimentaria: ${encodeURIComponent(menu)}`;
-      }
+      const formData = new FormData();
+      formData.append(ENTRY_NOMBRE, nombre);
+      formData.append(ENTRY_ADULTOS, adultos);
+      formData.append(ENTRY_NINOS, ninos);
+      formData.append(ENTRY_MENU, menu);
 
-      window.open(`https://wa.me/${telefono}?text=${texto}`, '_blank');
+      fetch(GOOGLE_FORM_ACTION_URL, { method: "POST", mode: "no-cors", body: formData })
+        .then(() => {
+          statusEl.textContent = "¡Gracias! Tu confirmación fue enviada.";
+          document.getElementById('rsvpForm').reset();
+        })
+        .catch(() => {
+          statusEl.textContent = "Hubo un problema, probá de nuevo más tarde.";
+        });
     });
   </script>
 
