@@ -118,6 +118,7 @@
       margin: 8px 0;
       border: 1px solid #ddd;
       border-radius: 6px;
+      background-color: #fff;
     }
     footer {
       padding: 30px;
@@ -125,19 +126,17 @@
       color: #888;
     }
     .icon-svg {
-      width: 48px;
-      height: 48px;
-      margin-bottom: 8px;
-      color: #000;
+      width: 54px;
+      height: 54px;
+      margin: 0 auto 12px;
+      color: var(--primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     .icon-svg svg {
       width: 100%;
       height: 100%;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2.5; /* Líneas más gruesas */
-      stroke-linecap: round;
-      stroke-linejoin: round;
     }
     .transfer-box .row {
       display: flex;
@@ -174,30 +173,32 @@
   <!-- Ceremonia Religiosa -->
   <div class="card">
     <div class="icon-svg">
-      <svg viewBox="0 0 24 24">
-        <path d="m18 10-6-8-6 8"/>
-        <path d="M12 2v6"/>
-        <path d="M10 5h4"/>
-        <path d="M6 10v12h12V10"/>
-        <path d="M12 22v-6a2 2 0 0 0-2-2H10a2 2 0 0 0-2 2v6"/>
+      <svg viewBox="0 0 64 64" fill="none">
+        <path d="M32 6V18M26 12H38" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M32 18L14 30V56H50V30L32 18Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M26 56V42C26 38.6863 28.6863 36 32 36C35.3137 36 38 38.6863 38 42V56" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+        <circle cx="32" cy="28" r="4" stroke="currentColor" stroke-width="2.5"/>
+        <path d="M8 56H56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
       </svg>
     </div>
     <h2>Ceremonia Religiosa</h2>
     <p><strong>Parroquia Nuestra Señora de Lourdes</strong></p>
-    <p><strong>Hora:</strong> 20:00 hs</p>
+    <p><strong>Hora:</strong> 19:30 hs</p>
     <a href="https://maps.app.goo.gl/qFubYd1baecdgXVA8" target="_blank" class="btn">Ver en Google Maps</a>
   </div>
 
   <!-- Civil -->
   <div class="card">
     <div class="icon-svg">
-      <svg viewBox="0 0 24 24">
-        <line x1="3" y1="22" x2="21" y2="22"/>
-        <line x1="6" y1="18" x2="6" y2="11"/>
-        <line x1="10" y1="18" x2="10" y2="11"/>
-        <line x1="14" y1="18" x2="14" y2="11"/>
-        <line x1="18" y1="18" x2="18" y2="11"/>
-        <polygon points="12 2 20 7 4 7"/>
+      <svg viewBox="0 0 64 64" fill="none">
+        <path d="M8 14C8 14 18 10 32 16C46 10 56 14 56 14V50C56 50 46 46 32 52C18 46 8 50 8 50V14Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M32 16V52" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M14 22C20 20 26 21 28 22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M14 30C20 28 26 29 28 30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M14 38C20 36 26 37 28 38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M36 22C38 21 44 20 50 22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M36 30C38 29 44 28 50 30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M36 38C38 37 44 36 50 38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
     </div>
     <h2>Civil</h2>
@@ -234,10 +235,21 @@
   <!-- Confirmación de Asistencia -->
   <div class="card">
     <h2>Confirmación de Asistencia</h2>
+    <p class="note" style="margin-bottom: 15px; font-weight: 600;">Por favor, enviar una confirmación por persona.</p>
     <form id="rsvpForm">
-      <input type="text" id="nombre" placeholder="Tu Nombre y Apellido" required>
-      <input type="number" id="adultos" min="1" placeholder="Cantidad de adultos (incluyéndote a vos)" required>
-      <input type="number" id="ninos" min="0" placeholder="Cantidad de niños (0 si no asisten)" required>
+      <input type="text" id="nombre" placeholder="Nombre y Apellido" required>
+      
+      <select id="asistencia" required>
+        <option value="Sí, asistiré" selected>Sí, asistiré</option>
+        <option value="No podré asistir">No podré asistir</option>
+      </select>
+
+      <select id="edad" required>
+        <option value="Adulto" selected>Adulto</option>
+        <option value="Entre 3 y 11 años inclusive">Entre 3 y 11 años inclusive</option>
+        <option value="Menor de 3 años">Menor de 3 años</option>
+      </select>
+
       <input type="text" id="menu" placeholder="Restricción alimentaria (Celiaco, vegetariano, etc.)">
       <button type="submit" class="btn">Confirmar asistencia</button>
       <p class="note" id="rsvpStatus"></p>
@@ -249,8 +261,8 @@
   </footer>
 
   <script>
-    // Fecha de la boda
-    const weddingDate = new Date("April 2, 2027 20:00:00").getTime();
+    // Fecha de la boda (actualizado a las 19:30 hs)
+    const weddingDate = new Date("April 2, 2027 19:30:00").getTime();
 
     const timer = setInterval(() => {
       const now = new Date().getTime();
@@ -280,30 +292,33 @@
       });
     }
 
-    const GOOGLE_FORM_ACTION_URL = "https://docs.google.com/forms/d/1C1xS3izwvDvtrxPMGZ0TR_a_4SaesObY-BBge_AV5xI/formResponse";
-    const ENTRY_NOMBRE = "entry.768434386";
-    const ENTRY_ADULTOS = "entry.146019545";
-    const ENTRY_NINOS = "entry.1993614961";
-    const ENTRY_MENU = "entry.1111520346";
+    // REEMPLAZAR CON TU URL Y ENTRY IDs ACTUALIZADOS DE GOOGLE FORMS:
+    const GOOGLE_FORM_ACTION_URL = "https://docs.google.com/forms/d/e/TU_FORM_ID/formResponse";
+    const ENTRY_NOMBRE = "entry.111111111";
+    const ENTRY_ASISTENCIA = "entry.222222222";
+    const ENTRY_EDAD = "entry.333333333";
+    const ENTRY_MENU = "entry.444444444";
 
     document.getElementById('rsvpForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const nombre = document.getElementById('nombre').value;
-      const adultos = document.getElementById('adultos').value;
-      const ninos = document.getElementById('ninos').value;
+      const asistencia = document.getElementById('asistencia').value;
+      const edad = document.getElementById('edad').value;
       const menu = document.getElementById('menu').value;
       const statusEl = document.getElementById('rsvpStatus');
 
       const formData = new FormData();
       formData.append(ENTRY_NOMBRE, nombre);
-      formData.append(ENTRY_ADULTOS, adultos);
-      formData.append(ENTRY_NINOS, ninos);
+      formData.append(ENTRY_ASISTENCIA, asistencia);
+      formData.append(ENTRY_EDAD, edad);
       formData.append(ENTRY_MENU, menu);
 
       fetch(GOOGLE_FORM_ACTION_URL, { method: "POST", mode: "no-cors", body: formData })
         .then(() => {
-          statusEl.textContent = "¡Gracias! Tu confirmación fue enviada.";
+          statusEl.textContent = "¡Gracias! Tu respuesta fue enviada.";
           document.getElementById('rsvpForm').reset();
+          document.getElementById('asistencia').value = "Sí, asistiré";
+          document.getElementById('edad').value = "Adulto";
         })
         .catch(() => {
           statusEl.textContent = "Hubo un problema, probá de nuevo más tarde.";
