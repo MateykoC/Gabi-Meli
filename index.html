@@ -52,6 +52,13 @@
       margin: 10px 0;
       font-weight: normal;
     }
+    /* Clase especial para la & para que no parezca una E */
+    .ampersand {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7em;
+      font-weight: 300;
+      margin: 0 5px;
+    }
     .date-title {
       font-size: 1.3rem;
       font-weight: 600;
@@ -138,6 +145,9 @@
       width: 100%;
       height: 100%;
     }
+    .moon-icon {
+      color: #d4af37; /* Color dorado para la luna */
+    }
     .transfer-box .row {
       display: flex;
       justify-content: space-between;
@@ -158,7 +168,7 @@
     
     <div class="header-content">
       <p class="subtitle">¡Nos Casamos!</p>
-      <h1>Melina & Gabriel</h1>
+      <h1>Melina <span class="ampersand">&</span> Gabriel</h1>
       <p class="date-title">02 de Abril de 2027</p>
     </div>
   </header>
@@ -256,12 +266,22 @@
     </form>
   </div>
 
+  <!-- Regalo / Luna de Miel -->
+  <div class="card">
+    <div class="icon-svg moon-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </div>
+    <p style="font-size: 1.1rem; font-weight: 600; margin-bottom: 10px;">¡Compartir con ustedes esta noche es el mejor de los regalos!</p>
+    <p>Pero si desean hacernos un presente, pueden ayudarnos con nuestra luna de miel.</p>
+  </div>
+
   <footer>
     ¡Nos vemos pronto!
   </footer>
 
   <script>
-    // Fecha de la boda (actualizado a las 19:30 hs)
     const weddingDate = new Date("April 2, 2027 19:30:00").getTime();
 
     const timer = setInterval(() => {
@@ -292,12 +312,12 @@
       });
     }
 
-    // REEMPLAZAR CON TU URL Y ENTRY IDs ACTUALIZADOS DE GOOGLE FORMS:
-    const GOOGLE_FORM_ACTION_URL = "https://docs.google.com/forms/d/e/TU_FORM_ID/formResponse";
-    const ENTRY_NOMBRE = "entry.111111111";
-    const ENTRY_ASISTENCIA = "entry.222222222";
-    const ENTRY_EDAD = "entry.333333333";
-    const ENTRY_MENU = "entry.444444444";
+    // VARIABLES A REEMPLAZAR CON TU NUEVO FORMULARIO:
+    const GOOGLE_FORM_ACTION_URL = "https://docs.google.com/forms/d/1bFCUOYL3Y8avWq-ai41sdfKkwfG93MMxuxlMkNSBb5Y/formResponse";
+    const ENTRY_NOMBRE = "entry.1682893191";
+    const ENTRY_ASISTENCIA = "entry.1606878947";
+    const ENTRY_EDAD = "entry.1004630562";
+    const ENTRY_MENU = "entry.306261522";
 
     document.getElementById('rsvpForm').addEventListener('submit', function(e) {
       e.preventDefault();
